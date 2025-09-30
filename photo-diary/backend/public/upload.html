@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photo Diary • Upload</title>
+    <style>
+      body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 40px; }
+      main { max-width: 720px; margin: 0 auto; }
+      h1 { margin-top: 0; }
+      form { display: grid; gap: 12px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+      input[type="file"] { padding: 8px; }
+      button { padding: 10px 16px; border: 0; background: #2563eb; color: #fff; border-radius: 6px; cursor: pointer; }
+      button:disabled { opacity: 0.6; cursor: not-allowed; }
+      .result { margin-top: 16px; }
+      .link { margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Upload a Photo</h1>
+      <p><a href="/viewer.html">Go to viewer</a></p>
+      <form id="uploadForm">
+        <input id="fileInput" name="file" type="file" accept="image/*" required>
+        <button id="submitBtn" type="submit">Upload</button>
+      </form>
+      <div class="result" id="result"></div>
+    </main>
+    <script>
+      const form = document.getElementById('uploadForm');
+      const fileInput = document.getElementById('fileInput');
+      const submitBtn = document.getElementById('submitBtn');
+      const resultEl = document.getElementById('result');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!fileInput.files.length) return;
+        submitBtn.disabled = true;
+        resultEl.textContent = 'Uploading...';
+        try {
+          const data = new FormData();
+          data.append('file', fileInput.files[0]);
+          const res = await fetch('/upload', { method: 'POST', body: data });
+          if (!res.ok) throw new Error('Upload failed');
+          const json = await res.json();
+          resultEl.innerHTML = `Uploaded! <div class="link"><a href="${json.url}" target="_blank">View file</a></div>`;
+          fileInput.value = '';
+        } catch (err) {
+          resultEl.textContent = err.message || 'Upload failed';
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+  </html>
+
+
