@@ -2,6 +2,8 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100vh;           /* lock to viewport height */
+  overflow: hidden;        /* disable scroll */
   font-family: Helvetica, Arial, sans-serif;
   background: #d8d6d8;
   color: #333;
@@ -17,11 +19,12 @@ header h1 {
 }
 
 main {
-  min-height: 100vh;
+  height: 100vh;           /* fill viewport */
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: 1fr auto auto; /* image area + caption + actions */
   place-items: center;
-  padding: 60px 16px 24px;
+  padding: 60px 16px 24px; /* room for fixed header */
+  box-sizing: border-box;
 }
 
 .photo-wrapper {
@@ -32,11 +35,13 @@ main {
 
 /* Photo 50% width, responsive */
 #photoDisplay {
-  width: 50%;
-  max-width: 50vw;
+  width: auto;
+  max-width: min(50vw, 100vw);             /* prefer 50% width, never exceed viewport */
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 6px 40px rgba(0,0,0,0.25);
+  max-height: calc(100vh - 180px);         /* fit within viewport minus caption/actions/header */
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 6px 40px rgba(0, 0, 0, 0.611);
 }
 
 .caption {
@@ -59,7 +64,7 @@ main {
   border-radius: 12px;
   padding: 12px 24px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(41, 40, 40, 0.25), inset 0 4px 8px rgba(255,255,255,0.5);
+  box-shadow: 0 10px 30px rgba(41, 40, 40, 0.333), inset 0 4px 8px rgba(255,255,255,0.5);
 }
 
 #backBtn:hover {
@@ -68,9 +73,23 @@ main {
 
 @media (max-width: 720px) {
   #photoDisplay {
-    width: 90%;
-    max-width: 90vw;
+    width: auto;
+    max-width: 90vw;                         /* on small screens use up to 90% width */
+    max-height: calc(100vh - 180px);         /* still avoid overflow */
   }
+}
+
+/* Optional watermark text layered behind photo */
+.wm {
+  position: fixed;
+  bottom: 1px;
+  right: 2px;
+  font-size: 250px;
+  font-weight: bold;
+  color: rgba(197, 197, 197, 0.206);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
 }
 
 

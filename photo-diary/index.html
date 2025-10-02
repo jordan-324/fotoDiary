@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>photo-Diary</title>
+    <title>photo-diary</title>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <main>
       <header>
-        <h1>photo-Diary</h1>
+        <h1>photo—Diary</h1>
       </header>
 
       <section id="gallery" class="card">
@@ -33,7 +33,7 @@
       (async function init() {
         const photos = await loadPhotos();
         const counter = document.getElementById('counter');
-        counter.textContent = `Available photos: ${photos.length}`;
+        counter.textContent = `count — ${photos.length}`;
 
         const btn = document.getElementById('randomBtn');
         btn.addEventListener('click', () => {
