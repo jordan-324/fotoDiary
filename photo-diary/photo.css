@@ -1,0 +1,76 @@
+/* Base */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background: #d8d6d8;
+  color: #333;
+}
+
+header h1 {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+main {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  place-items: center;
+  padding: 60px 16px 24px;
+}
+
+.photo-wrapper {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+/* Photo 50% width, responsive */
+#photoDisplay {
+  width: 50%;
+  max-width: 50vw;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 6px 40px rgba(0,0,0,0.25);
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.6);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.actions {
+  margin-top: 16px;
+}
+
+#backBtn {
+  background: linear-gradient(145deg, #eae7e7c5, #bebbbb75);
+  color: #333;
+  border: 1px solid #b2b0b0de;
+  border-radius: 12px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(41, 40, 40, 0.25), inset 0 4px 8px rgba(255,255,255,0.5);
+}
+
+#backBtn:hover {
+  transform: scale(0.98);
+}
+
+@media (max-width: 720px) {
+  #photoDisplay {
+    width: 90%;
+    max-width: 90vw;
+  }
+}
+
+

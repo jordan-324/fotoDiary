@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>photo-Diary • Photo</title>
+    <link rel="stylesheet" href="./photo.css">
+  </head>
+  <body>
+    <header>
+      <h1>photo-Diary</h1>
+    </header>
+    <main>
+      <div class="photo-wrapper">
+        <img id="photoDisplay" alt="Photo" src="" />
+      </div>
+      <div id="caption" class="caption"></div>
+      <div class="actions">
+        <button id="backBtn" type="button">Return</button>
+      </div>
+    </main>
+    <script>
+      function getParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+      const filename = getParam('f');
+      const title = getParam('t') || '';
+      if (filename) {
+        const img = document.getElementById('photoDisplay');
+        img.src = `./uploads/${encodeURIComponent(filename)}`;
+      }
+      document.getElementById('caption').textContent = title;
+      document.getElementById('backBtn').addEventListener('click', () => {
+        window.location.href = './index.html';
+      });
+    </script>
+  </body>
+  </html>
+
+

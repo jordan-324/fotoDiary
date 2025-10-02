@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>photo-Diary</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>photo-Diary</h1>
+      </header>
+
+      <section id="gallery" class="card">
+        <button id="randomBtn" type="button">stalk</button>
+        <div class="name" id="counter">Available photos: 0</div>
+      </section>
+    </main>
+
+    <script>
+      async function loadPhotos() {
+        try {
+          const res = await fetch('./photos.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load photos.json');
+          return await res.json();
+        } catch (e) {
+          console.error(e);
+          return [];
+        }
+      }
+
+      (async function init() {
+        const photos = await loadPhotos();
+        const counter = document.getElementById('counter');
+        counter.textContent = `Available photos: ${photos.length}`;
+
+        const btn = document.getElementById('randomBtn');
+        btn.addEventListener('click', () => {
+          if (!photos.length) return;
+          const idx = Math.floor(Math.random() * photos.length);
+          const chosen = photos[idx];
+          const u = new URL('./photo.html', window.location.href);
+          u.searchParams.set('f', chosen.filename);
+          u.searchParams.set('t', chosen.title || '');
+          window.location.href = u.toString();
+        });
+      })();
+    </script>
+  </body>
+  </html>
+
+
