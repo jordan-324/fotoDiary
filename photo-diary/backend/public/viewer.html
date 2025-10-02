@@ -4,26 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Photo Diary • Viewer</title>
-    <style>
-      :root { color-scheme: light dark; }
-      body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 20px; }
-      main { max-width: 1100px; margin: 0 auto; }
-      header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-      h1 { margin: 0; }
-      .grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
-      .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; background: #fff; display: grid; gap: 8px; align-content: start; }
-      .card button { padding: 10px 12px; border: 0; background: #2563eb; color: #fff; border-radius: 6px; cursor: pointer; }
-      .card .name { font-size: 12px; color: #444; word-break: break-all; }
-      .empty { opacity: 0.7; margin-top: 24px; }
-    </style>
+    <link rel="stylesheet" href="/style.css">
+    
+
   </head>
   <body>
     <main>
       <header>
-        <h1>photo-Diary</h1>
+        <h1>photo—diary</h1>
       </header>
-      <section id="gallery" class="grid"></section>
-      <p id="empty" class="empty" hidden>No uploads yet.</p>
+      <section id="gallery"></section>
+      <p id="empty" hidden>No uploads yet.</p>
+     
+     
+      
     </main>
     <script>
       async function load() {
@@ -43,20 +37,21 @@
           return;
         }
         empty.hidden = true;
-        const mostRecent = files[0];
         const item = document.createElement('article');
         item.className = 'card';
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.textContent = 'Open photo';
+        btn.textContent = 'invade';
         btn.addEventListener('click', () => {
+          const idx = Math.floor(Math.random() * files.length);
+          const chosen = files[idx];
           const u = new URL('/photo.html', window.location.origin);
-          u.searchParams.set('f', mostRecent);
+          u.searchParams.set('f', chosen);
           window.location.href = u.toString();
         });
         const name = document.createElement('div');
         name.className = 'name';
-        name.textContent = mostRecent;
+        name.textContent = `count — ${files.length}`;
         item.appendChild(btn);
         item.appendChild(name);
         gallery.appendChild(item);
